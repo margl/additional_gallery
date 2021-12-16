@@ -1,0 +1,19 @@
+additional_gallery_upload:
+  path: /additional_gallery/{idProduct}/upload
+  methods: [POST]
+  defaults:
+    _controller: 'Margl\AdditionalGallery\Controller\Admin\ImageUploadController::uploadAction'
+    _legacy_controller: 'AdditionalGalleryController'
+    _legacy_link: 'AdditionalGalleryController:upload'
+  requirements:
+    idProduct: \d+
+
+additional_gallery_delete:
+  path: /additional_gallery/{idImage}/delete
+  methods: [DELETE]
+  defaults:
+    _controller: 'Margl\AdditionalGallery\Controller\Admin\ImageUploadController:deleteAction'
+    _legacy_controller: 'AdditionalGalleryController'
+    _legacy_link: 'AdditionalGalleryController:delete'
+  requirements:
+    idImage: \d+
