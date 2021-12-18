@@ -1,6 +1,6 @@
 <?php
 
-namespace Margl\AdditionalGallery\Install;
+namespace PrestaShop\Module\AdditionalGallery\Install;
 
 use Additional_Gallery;
 use Exception;
@@ -42,7 +42,7 @@ class Installer
     private function registerHooks()
     {
         return $this->module->registerHook('displayAdminProductsMainStepLeftColumnMiddle')
-            && $this->module->registerHook('displayFooterProduct')
+            && $this->module->registerHook('displayAfterProductThumbs')
             && $this->module->registerHook('actionAdminControllerSetMedia');
     }
 

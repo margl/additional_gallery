@@ -7,6 +7,26 @@ $(function() {
             uploadFiles(file_input.prop('files'), endpoint);
         }
     });
+
+    $(document).on('click', '.additional-gallery-image-delete', function() {
+        let parent_div = $(this).parent();
+        let endpoint = $(this).data('delete-url');
+        $.ajax({
+            url: endpoint,
+            type: 'DELETE',
+            success: function (response) {
+                if (response.status) {
+                    $(parent_div).remove();
+                }
+            },
+            error: function (res) {
+                let response = res.responseJSON;
+                if(response.error) {
+                    showErrorMessage(response.error);
+                }
+            }
+        });
+    })
 })
 
 function uploadFiles(files, endpoint) {
@@ -22,7 +42,16 @@ function uploadFiles(files, endpoint) {
         processData: false,
         contentType: false,
         success: function (response) {
-
+            if (response.length) {
+                response.forEach(function (el) {
+                    if(el.content) {
+                        $('.additional-gallery-image-container').append(el.content);
+                    } else if(el.error && el.image_name) {
+                        $.growl.error({title: el.image_name, message: el.error});
+                    }
+                })
+                $('#additional_gallery_files').val('');
+            }
         }
     });
 }

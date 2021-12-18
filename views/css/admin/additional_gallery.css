@@ -1,3 +1,30 @@
 .additional-gallery-upload-btn {
     height: 100%;
 }
+
+.additional-gallery-image {
+    width: 200px;
+}
+
+.additional-gallery-image-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.additional-gallery-image-container .additional-gallery-image-wrapper {
+    flex: 2 0 21%;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+.additional-gallery-image-wrapper {
+    position: relative;
+}
+
+.additional-gallery-image-wrapper .additional-gallery-image-delete {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    cursor: pointer;
+}

@@ -8,10 +8,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Margl\\AdditionalGallery\\": "src/"
-    },
-    "config": {
-      "prepend-autoloader": false
+      "PrestaShop\\Module\\AdditionalGallery\\": "src/"
     },
     "type": "prestashop-module"
   }

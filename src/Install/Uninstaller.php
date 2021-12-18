@@ -1,6 +1,6 @@
 <?php
 
-namespace Margl\AdditionalGallery\Install;
+namespace PrestaShop\Module\AdditionalGallery\Install;
 
 use Additional_Gallery;
 use PrestaShop\PrestaShop\Core\Exception\ContainerNotFoundException;

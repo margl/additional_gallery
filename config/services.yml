@@ -1,0 +1,7 @@
+services:
+  prestashop.module.additionalimage.repository.additional_image_repository:
+    class: PrestaShop\Module\AdditionalImage\Repository\AdditionalImageRepository
+    public: true
+    factory: ['@doctrine.orm.default_entity_manager', getRepository]
+    arguments:
+      - PrestaShop\Module\AdditionalGallery\Entity\AdditionalImage

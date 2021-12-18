@@ -6,8 +6,8 @@ if (!defined('_PS_VERSION_')) {
 
 require_once 'vendor/autoload.php';
 
-use Margl\AdditionalGallery\Install\Installer;
-use Margl\AdditionalGallery\Install\Uninstaller;
+use PrestaShop\Module\AdditionalGallery\Install\Installer;
+use PrestaShop\Module\AdditionalGallery\Install\Uninstaller;
 use PrestaShop\PrestaShop\Adapter\SymfonyContainer;
 
 class Additional_Gallery extends Module 
@@ -24,7 +24,7 @@ class Additional_Gallery extends Module
         $this->displayName = $this->trans('Additional Gallery', [], 'Modules.Additionalgallery.Admin');
         $this->description = $this->trans('Add an additional gallery to your product page', [], 'Modules.Additionalgallery.Admin');
         $this->ps_versions_compliancy = array('min' => '1.7.6.0', 'max' => _PS_VERSION_);
-        $this->registerHook('actionAdminControllerSetMedia');
+        $this->registerHook('displayAfterProductThumbs');
     }
 
     /**
@@ -81,11 +81,33 @@ class Additional_Gallery extends Module
      */
     public function hookDisplayAdminProductsMainStepLeftColumnMiddle($params) 
     {
+        /** @var \PrestaShop\Module\AdditionalGallery\Repository\AdditionalImageRepository $image_repository */
+        $image_repository = $this->get('prestashop.module.additionalimage.repository.additional_image_repository');
+
         return $this->get('twig')->render(
             '@Modules/additional_gallery/views/templates/admin/upload.twig',
             [
-                'idProduct' => $params['id_product']
+                'idProduct' => $params['id_product'],
+                'additionalImages' => $image_repository->getByProductId($params['id_product'])
             ]
         );
+    }
+    
+    public function hookDisplayAfterProductThumbs($params) {
+        $product = $params['product'];
+
+        /** @var \PrestaShop\Module\AdditionalGallery\Repository\AdditionalImageRepository $image_repository */
+        $image_repository = $this->get('prestashop.module.additionalimage.repository.additional_image_repository');
+        $additional_images = $image_repository->getByProductId($product->id);
+
+        if(empty($additional_images)) {
+            return;
+        }
+
+        $this->context->smarty->assign([
+            'additionalImages' => $additional_images
+        ]);
+
+        return $this->context->smarty->fetch('module:additional_gallery/views/templates/front/gallery.tpl');
     }
 }
