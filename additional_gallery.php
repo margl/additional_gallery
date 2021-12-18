@@ -33,7 +33,6 @@ class Additional_Gallery extends Module
      */
     public function install() 
     {
-        xdebug_break();
         $installer = new Installer($this);
 
         return parent::install() && $installer->install();
